@@ -13,9 +13,9 @@ X_0=DT_geometry.Points(:,1); % X-coords of the imported stl model
 Y_0=DT_geometry.Points(:,2); % Y-coords of the imported stl model
 Z_0=DT_geometry.Points(:,3); % Z-coords of the imported stl model
 
-T=sort(DT_geometry.ConnectivityList,2);
+T=sort(DT_geometry.ConnectivityList,2); % rendezi a triangulation kapcsolatlistát
 
-mesvector=zeros(size(X_mes_0));
+mesvector=zeros(size(X_mes_0)); % vektor a mérési pontok sorszámának
 
 for i_run=1:length(X_mes_0)
     P=[X_mes_0(i_run);Y_mes_0(i_run);Z_mes_0(i_run)];

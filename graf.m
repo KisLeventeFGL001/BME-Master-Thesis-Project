@@ -1,10 +1,11 @@
 function Fig = graf(STLNAME,ZOOM,MODE,REFINE)
 
-DT_geometry=refinement(STLNAME,REFINE(1),REFINE(2));
-MODEstr=num2str(MODE);
+DT_geometry=refinement(STLNAME,REFINE(1),REFINE(2)); % az stl fájl beolvasása, és finomítása
+MODEstr=num2str(MODE); % segéd string a módusnak megfelelő textfile kiválasztásához
+% a mérési pontok megfeleltetése:
 [DT_geometry,DT_mes_0,dX_mes,dY_mes,dZ_mes,mesvector]=addmeaspoints("mes_0.txt","x_mes_"+MODEstr+".txt","y_mes_"+MODEstr+".txt","z_mes_"+MODEstr+".txt",DT_geometry); %#ok<ASGLU>
-DT_modeshape_orig=stlread("modeshape_"+MODEstr+".stl");
-DT_modeshape_interp=g3D(DT_geometry,dX_mes,dY_mes,dZ_mes,mesvector,ZOOM);
+DT_modeshape_orig=stlread("modeshape_"+MODEstr+".stl"); % a valós lengéskép beolvasása (összehasonlításnak)
+DT_modeshape_interp=g3D(DT_geometry,dX_mes,dY_mes,dZ_mes,mesvector,ZOOM); %interpoláció, a mért lengéskép meghatározása
 
 Fig=figure(1);
 subplot(1,2,1)
