@@ -68,7 +68,7 @@ for i_run=1:length(X_mes_0)
     min_vn_index=find(d(7,:)==min(d(7,:)));
     
     if length(minlambda_index)>1
-       'anyád'; 
+       'anyád'; % :-D 
     end
     
     member=ismember(minlambda_index,min_vn_index);

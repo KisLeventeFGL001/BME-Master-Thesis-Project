@@ -1,4 +1,4 @@
-function DT_geometry = refinement(geometry,desired_EL,longest_EL) % longest_EL must be higher than desired_EL to start the iteration
+function DT_geometry = refinement(geometry,desired_EL) % longest_EL must be higher than desired_EL to start the iteration
 
 geom_read=stlread(geometry);
 
@@ -6,7 +6,7 @@ X=geom_read.Points(:,1);
 Y=geom_read.Points(:,2);
 Z=geom_read.Points(:,3);
 T=sort(geom_read.ConnectivityList,2);
-
+longest_EL=desired_EL*2;%Inf
 while longest_EL>desired_EL
     size_T=size(T);
     triangles=[(1:size_T(1))';(1:size_T(1))';(1:size_T(1))'];

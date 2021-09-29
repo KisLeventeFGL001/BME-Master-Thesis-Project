@@ -1,6 +1,6 @@
 function Fig = graf(STLNAME,ZOOM,MODE,REFINE)
 
-DT_geometry=refinement(STLNAME,REFINE(1),REFINE(2)); % az stl fájl beolvasása, és finomítása
+DT_geometry=refinement(STLNAME,REFINE); % az stl fájl beolvasása, és finomítása
 MODEstr=num2str(MODE); % segéd string a módusnak megfelelő textfile kiválasztásához
 % a mérési pontok megfeleltetése:
 [DT_geometry,DT_mes_0,dX_mes,dY_mes,dZ_mes,mesvector]=addmeaspoints("mes_0.txt","x_mes_"+MODEstr+".txt","y_mes_"+MODEstr+".txt","z_mes_"+MODEstr+".txt",DT_geometry); %#ok<ASGLU>
