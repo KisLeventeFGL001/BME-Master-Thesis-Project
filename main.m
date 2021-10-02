@@ -6,8 +6,8 @@ close all;
 INTERPMODE = "BARYC"; % Interpolálási mód kiválasztása. "BARYC" vagy "GRAF"
 STLNAME = "hangvilla.stl"; % STL file neve
 ZOOM = 4.3e-003; % Mekkora nagyításban lássuk az elmozdulást?
-MODE = 2; % Hanyadik sajátfrekvenciához tartozó lengésképet jelenítsük meg?
-REFINE = 0.01; % Mennyire sűrítsük az eredeti STL hálót? (első elem: maximálisan megengedett élhossz [mm?] vaz stl mérétkegységében;
+MODE = 1; % Hanyadik sajátfrekvenciához tartozó lengésképet jelenítsük meg?
+REFINE = 0.01; % Mennyire sűrítsük az eredeti STL hálót? (első elem: maximálisan megengedett élhossz [m] az stl mérétkegységében;
 
 
 if INTERPMODE == "BARYC"

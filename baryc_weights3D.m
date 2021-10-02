@@ -40,30 +40,57 @@ for dt_step=1:size_DT_mes_0(1)
 end
 
 %% vektorizált keresés
-ri_xyz1=[X_0';Y_0';Z_0';ones(size(X_0'))];
-
-All_lambda=sum(permute(Rinvers(:,:,:),[2,1,3]).*permute(ri_xyz1,[1,3,4,2]),1);
-
-smallestdistance=squeeze(sum(abs(All_lambda),2));
-[~,I] = min(smallestdistance,[],1);
-for num_step=1:length(X_0)
-  LAMBDA(num_step,:)=All_lambda(1,:,I(num_step),num_step);
-end
-tri_LAMBDA=I';
+% ri_xyz1=[X_0';Y_0';Z_0';ones(size(X_0'))];
+% 
+% All_lambda=sum(permute(Rinvers(:,:,:),[2,1,3]).*permute(ri_xyz1,[1,3,4,2]),1);
+% 
+% smallestdistance=squeeze(sum(abs(All_lambda),2));
+% [~,I] = min(smallestdistance,[],1);
+% for num_step=1:length(X_0)
+%   LAMBDA(num_step,:)=All_lambda(1,:,I(num_step),num_step);
+% end
+% tri_LAMBDA=I';
 
 %%--------------
 
-% for num_step=1:length(X_0)
-%     x=X_0(num_step);
-%     y=Y_0(num_step);
-%     z=Z_0(num_step);
-%     r=[x;y;z;1];
-%     for dt_step=1:size_DT_mes_0(1)
-%         possible_lambda(dt_step,:)=Rinvers(:,:,dt_step)*r;
-%         abs_sum(dt_step)=sum(abs(possible_lambda(dt_step,:)));
-%     end
-%     [~,tri_LAMBDA(num_step)]=min(abs_sum);
-%     LAMBDA(num_step,:)=possible_lambda(tri_LAMBDA(num_step),:);
-% end
+triangles=zeros(4,3,size(T_mes,1));
+
+for i=1:size(T_mes,1)
+    for j=1:4
+        T=T_mes(i,:);
+        T(j)=[];
+        triangles(j,:,i)=T;
+    end
+end
+
+for num_step=1:length(X_0)
+    x=X_0(num_step);
+    y=Y_0(num_step);
+    z=Z_0(num_step);
+    r=[x;y;z;1];
+    for dt_step=1:size_DT_mes_0(1)
+        possible_lambda(dt_step,:)=Rinvers(:,:,dt_step)*r;
+        abs_sum(dt_step)=sum(abs(possible_lambda(dt_step,:)));
+    end
+    [~,tri_LAMBDA(num_step)]=min(abs_sum);
+    if all(possible_lambda(tri_LAMBDA(num_step),:)>=0)
+        LAMBDA(num_step,:)=possible_lambda(tri_LAMBDA(num_step),:);
+    else
+        P=r(1:3);
+        bestdistances=zeros(4,size(triangles,3));
+        for i=1:size(triangles,3)
+            for j=1:4
+                A=[X_mes_0(triangles(j,1,i));Y_mes_0(triangles(j,1,i));Z_mes_0(triangles(j,1,i))];
+                B=[X_mes_0(triangles(j,2,i));Y_mes_0(triangles(j,2,i));Z_mes_0(triangles(j,2,i))];
+                C=[X_mes_0(triangles(j,3,i));Y_mes_0(triangles(j,3,i));Z_mes_0(triangles(j,3,i))];
+                bestdistances(j,i)=bestdistance(P,A,B,C);
+            end
+        end
+        smallestbestdistance = min(min(bestdistances));
+        [~,small_col]=find(bestdistances==smallestbestdistance);
+        LAMBDA(num_step,:)=possible_lambda(small_col(1),:);
+        tri_LAMBDA(num_step)=small_col(1);
+    end
+end
 
 end
