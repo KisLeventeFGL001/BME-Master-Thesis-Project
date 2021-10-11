@@ -53,6 +53,16 @@ tri_LAMBDA=I';
 
 %%--------------
 
+% triangles=zeros(4,3,size(T_mes,1));
+% 
+% for i=1:size(T_mes,1)
+%     for j=1:4
+%         T=T_mes(i,:);
+%         T(j)=[];
+%         triangles(j,:,i)=T;
+%     end
+% end
+% 
 % for num_step=1:length(X_0)
 %     x=X_0(num_step);
 %     y=Y_0(num_step);
@@ -63,7 +73,27 @@ tri_LAMBDA=I';
 %         abs_sum(dt_step)=sum(abs(possible_lambda(dt_step,:)));
 %     end
 %     [~,tri_LAMBDA(num_step)]=min(abs_sum);
-%     LAMBDA(num_step,:)=possible_lambda(tri_LAMBDA(num_step),:);
+%     if all(possible_lambda(tri_LAMBDA(num_step),:)>=0)
+%         LAMBDA(num_step,:)=possible_lambda(tri_LAMBDA(num_step),:);
+%     else
+%         P=r(1:3);
+%         bestdistances=zeros(4,size(triangles,3));
+% %         types=strings(4,size(triangles,3));
+%         for i=1:size(triangles,3)
+%             for j=1:4
+%                 A=[X_mes_0(triangles(j,1,i));Y_mes_0(triangles(j,1,i));Z_mes_0(triangles(j,1,i))];
+%                 B=[X_mes_0(triangles(j,2,i));Y_mes_0(triangles(j,2,i));Z_mes_0(triangles(j,2,i))];
+%                 C=[X_mes_0(triangles(j,3,i));Y_mes_0(triangles(j,3,i));Z_mes_0(triangles(j,3,i))];
+%                 [bestdistances(j,i),~]=bestdistance(P,A,B,C);
+%             end
+%         end
+%         smallestbestdistance = min(min(bestdistances));
+%         [~,small_col]=find(bestdistances==smallestbestdistance);
+% %         possible_lambda(small_col,:);
+% %         abs_sum(small_col);
+%         LAMBDA(num_step,:)=possible_lambda(small_col(1),:);
+%         tri_LAMBDA(num_step)=small_col(1);
+%     end
 % end
 
 end
